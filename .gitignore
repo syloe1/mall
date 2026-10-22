@@ -1,0 +1,33 @@
+.gocache/
+*.exe
+*.test
+*.out
+
+# 环境变量（含密钥，不要提交）
+.env
+
+.idea/
+*.iml
+*.iws
+*.ipr
+*.tar 
+
+# 本地构建 / 压测 / 私有资料（不进入公开仓库）
+dist/
+dist-prod/
+.gocache/
+.tmp*
+*.bundle
+Interview.MD
+Intro.MD
+*面试*.md
+面试*.md
+.claude/
+.vscode/
+
+# 可执行二进制 / 构建产物（入口名无扩展名，必须显式忽略）
+/mall-web
+/mall-worker
+/mall-seed
+/mall-web.bak*
+/mall-worker.bak*

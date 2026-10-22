@@ -1,0 +1,48 @@
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test cache
+.testcontainer/
+
+# Documentation
+*.md
+# Note: docs/ contains Swagger generated code — do NOT ignore
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# CI
+.github/
+.gitlab-ci.yml
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log

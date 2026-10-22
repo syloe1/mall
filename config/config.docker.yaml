@@ -1,0 +1,47 @@
+server:
+  model: release
+  port: 3333
+
+mysql:
+  host: mysql
+  port: 3306
+  dbname: mall
+  username: root
+  password: "123456"
+
+redis:
+  host: redis
+  port: 6379
+  password: ""
+  db: 0
+
+rabbitmq:
+  url: "amqp://guest:guest@rabbitmq:5672/"
+
+meilisearch:
+  host: "http://meilisearch:7700"
+  api_key: "mall-change-me-master-key" # 和 docker-compose 里 MEILI_MASTER_KEY 保持一致
+  product_index: "mall_products"
+
+seckill:
+  rate_limit_rate: 1000
+  rate_limit_capacity: 2000
+
+trace:
+  enabled: false
+  service_name: mall-api
+  jaeger_endpoint: http://jaeger:14268/api/traces
+
+path:
+  product: /static/product
+  avatar: /static/avatar
+
+jwt:
+  # secret 从环境变量 JWT_SECRET 读取
+  secret: "docker-dev-only-jwt-secret-change-me"
+
+security:
+  cors_origins: []
+  demo_mode: true
+  cookie_secure: false
+  trusted_proxies: ["127.0.0.1", "::1"]

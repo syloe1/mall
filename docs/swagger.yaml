@@ -1,0 +1,1859 @@
+basePath: /api/v1
+definitions:
+  dto.AddressCreateReq:
+    properties:
+      city:
+        type: string
+      detail:
+        type: string
+      district:
+        type: string
+      is_default:
+        type: boolean
+      phone:
+        type: string
+      postal_code:
+        type: string
+      province:
+        type: string
+      receiver_name:
+        type: string
+    required:
+    - city
+    - detail
+    - district
+    - phone
+    - province
+    - receiver_name
+    type: object
+  dto.AddressDeleteReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  dto.AddressSetDefaultReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  dto.AddressUpdateReq:
+    properties:
+      city:
+        type: string
+      detail:
+        type: string
+      district:
+        type: string
+      id:
+        description: ID：地址 ID （必填，要知道改哪个地址）
+        type: integer
+      is_default:
+        type: boolean
+      phone:
+        type: string
+      postal_code:
+        type: string
+      province:
+        type: string
+      receiver_name:
+        type: string
+    required:
+    - city
+    - detail
+    - district
+    - id
+    - phone
+    - province
+    - receiver_name
+    type: object
+  dto.AuthTokensResponse:
+    properties:
+      access_token:
+        description: "access_token：接口鉴权\n\t\trefresh_token：刷新登录\n\t\trole：角色（user/admin）"
+        type: string
+      refresh_token:
+        type: string
+      role:
+        type: string
+    type: object
+  dto.CartCheckedAllReq:
+    properties:
+      checked:
+        type: boolean
+    type: object
+  dto.CartItemAddReq:
+    properties:
+      product_id:
+        type: integer
+      quantity:
+        minimum: 1
+        type: integer
+    required:
+    - product_id
+    - quantity
+    type: object
+  dto.CartItemCheckedReq:
+    properties:
+      checked:
+        type: boolean
+      product_id:
+        type: integer
+    required:
+    - product_id
+    type: object
+  dto.CartItemDeleteReq:
+    properties:
+      product_id:
+        type: integer
+    required:
+    - product_id
+    type: object
+  dto.CartItemUpdateReq:
+    properties:
+      product_id:
+        type: integer
+      quantity:
+        minimum: 1
+        type: integer
+    required:
+    - product_id
+    - quantity
+    type: object
+  dto.ChangePasswordRequest:
+    properties:
+      new_password:
+        minLength: 6
+        type: string
+      old_password:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  dto.FavoriteCheckReq:
+    properties:
+      product_id:
+        type: integer
+    required:
+    - product_id
+    type: object
+  dto.FavoriteFolderCreateReq:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  dto.FavoriteFolderDeleteReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  dto.FavoriteFolderUpdateReq:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  dto.FavoriteItemAddReq:
+    properties:
+      folder_id:
+        type: integer
+      product_id:
+        type: integer
+    required:
+    - folder_id
+    - product_id
+    type: object
+  dto.FavoriteItemDeleteReq:
+    properties:
+      folder_id:
+        type: integer
+      product_id:
+        type: integer
+    required:
+    - folder_id
+    - product_id
+    type: object
+  dto.FavoriteItemListReq:
+    properties:
+      folder_id:
+        type: integer
+      page:
+        minimum: 0
+        type: integer
+      page_size:
+        minimum: 0
+        type: integer
+    required:
+    - folder_id
+    type: object
+  dto.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.OrderBuyNowReq:
+    properties:
+      address_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        minimum: 1
+        type: integer
+    required:
+    - address_id
+    - product_id
+    - quantity
+    type: object
+  dto.OrderCreateFromCartReq:
+    properties:
+      address_id:
+        type: integer
+    required:
+    - address_id
+    type: object
+  dto.PaymentCreateReq:
+    properties:
+      channel:
+        type: string
+      order_id:
+        type: integer
+      pay_password:
+        type: string
+    required:
+    - channel
+    - order_id
+    type: object
+  dto.PaymentMockSuccessReq:
+    properties:
+      payment_no:
+        type: string
+    required:
+    - payment_no
+    type: object
+  dto.ProductCreateReq:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      images:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      price_cents:
+        minimum: 1
+        type: integer
+      status:
+        type: string
+      stock:
+        minimum: 0
+        type: integer
+    required:
+    - category_id
+    - name
+    - price_cents
+    type: object
+  dto.ProductDeleteReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  dto.ProductUpdateReq:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      images:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      price_cents:
+        minimum: 1
+        type: integer
+      status:
+        type: string
+      stock:
+        minimum: 0
+        type: integer
+    required:
+    - category_id
+    - id
+    - name
+    - price_cents
+    type: object
+  dto.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  dto.RegisterRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.SeckillInitStockReq:
+    properties:
+      activity_id:
+        type: integer
+    required:
+    - activity_id
+    type: object
+  dto.SetPayPasswordRequest:
+    properties:
+      pay_password:
+        minLength: 6
+        type: string
+    required:
+    - pay_password
+    type: object
+  dto.UpdateUserRequest:
+    properties:
+      avatar:
+        type: string
+      nickname:
+        type: string
+    type: object
+  dto.UserAmountResponse:
+    properties:
+      amount:
+        type: string
+    type: object
+  mall_pkg_core.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      error: {}
+      msg:
+        type: string
+    type: object
+host: localhost:3333
+info:
+  contact: {}
+  description: 商城后端接口文档，包含用户、商品、购物车、订单、支付、秒杀等模块。
+  title: Mall 电商系统 API
+  version: "1.0"
+paths:
+  /admin/dead-letters/products:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品事件处理失败的死信记录
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: 每页条数
+        in: query
+        name: page_size
+        type: integer
+      - description: 来源(publisher/consumer)
+        in: query
+        name: source
+        type: string
+      - description: 事件类型
+        in: query
+        name: event_type
+        type: string
+      - description: 商品ID
+        in: query
+        name: product_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "403":
+          description: 非管理员
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 商品死信列表（管理员）
+      tags:
+      - 管理员
+  /admin/products:
+    get:
+      consumes:
+      - application/json
+      description: 后台分页查询商品列表（含下架）
+      parameters:
+      - description: 页码，从 1 开始
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: page_size
+        type: integer
+      - description: 状态：on_sale/off_sale/draft
+        in: query
+        name: status
+        type: string
+      - description: 分类 ID
+        in: query
+        name: category_id
+        type: integer
+      - description: 商品名称关键字
+        in: query
+        name: keyword
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "403":
+          description: 非管理员
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 商品管理列表（管理员）
+      tags:
+      - 管理员
+    post:
+      consumes:
+      - application/json
+      description: 后台创建商品
+      parameters:
+      - description: 商品信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "403":
+          description: 非管理员
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 创建商品（管理员）
+      tags:
+      - 管理员
+  /admin/products/detail:
+    delete:
+      consumes:
+      - application/json
+      description: 后台删除商品及关联图片
+      parameters:
+      - description: 商品ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "403":
+          description: 非管理员
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 删除商品（管理员）
+      tags:
+      - 管理员
+    put:
+      consumes:
+      - application/json
+      description: 后台更新商品信息
+      parameters:
+      - description: 商品信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "403":
+          description: 非管理员
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 更新商品（管理员）
+      tags:
+      - 管理员
+  /admin/products/reindex:
+    post:
+      description: 以 MySQL 为准，全量重建 Meilisearch 商品索引（数据补偿/对账）
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "403":
+          description: 非管理员
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 重建搜索索引（管理员）
+      tags:
+      - 管理员
+  /admin/seckill/activities/init-stock:
+    post:
+      consumes:
+      - application/json
+      description: 将秒杀活动商品库存加载到 Redis
+      parameters:
+      - description: 活动ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SeckillInitStockReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "403":
+          description: 非管理员
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 初始化秒杀库存（管理员）
+      tags:
+      - 管理员
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: 分页 + 分类 + 关键词查询上架商品
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: 每页条数
+        in: query
+        name: page_size
+        type: integer
+      - description: 分类ID
+        in: query
+        name: category_id
+        type: integer
+      - description: 搜索关键词
+        in: query
+        name: keyword
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 商品列表（公开）
+      tags:
+      - 商品
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 根据商品 ID 查询上架商品详情
+      parameters:
+      - description: 商品ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: 无效的商品ID
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "404":
+          description: 商品不存在或已下架
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 商品详情（公开）
+      tags:
+      - 商品
+  /products/search:
+    get:
+      consumes:
+      - application/json
+      description: 按关键词搜索上架商品
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: 每页条数
+        in: query
+        name: page_size
+        type: integer
+      - description: 搜索关键词
+        in: query
+        name: keyword
+        type: string
+      - description: 分类ID
+        in: query
+        name: category_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 搜索商品（公开）
+      tags:
+      - 商品
+  /seckill/activities:
+    get:
+      description: 返回当前进行中 / 未开始的秒杀活动（公开接口，无需登录）
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 秒杀活动列表
+      tags:
+      - 秒杀
+  /seckill/activities/{activity_id}/buy:
+    post:
+      consumes:
+      - application/json
+      description: 参与指定活动的秒杀，需要 JWT 认证，接口有令牌桶限流
+      parameters:
+      - description: 秒杀活动ID
+        in: path
+        name: activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{\"status\":\"queued\"}'
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "429":
+          description: 请求过于频繁
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 秒杀抢购
+      tags:
+      - 秒杀
+  /seckill/activities/{activity_id}/my-result:
+    get:
+      description: 登录后查询当前用户在某活动是否抢到（前端轮询用）；未抢到返回 data=null
+      parameters:
+      - description: 秒杀活动ID
+        in: path
+        name: activity_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 查询我的抢购结果
+      tags:
+      - 秒杀
+  /users/addresses:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 地址ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddressDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 删除地址
+      tags:
+      - 地址
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 地址列表
+      tags:
+      - 地址
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 地址信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddressCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 新增地址
+      tags:
+      - 地址
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 地址信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddressUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 更新地址
+      tags:
+      - 地址
+  /users/addresses/default:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 地址ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddressSetDefaultReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 设为默认地址
+      tags:
+      - 地址
+  /users/addresses/detail:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 地址ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 地址详情
+      tags:
+      - 地址
+  /users/cart:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 清空购物车
+      tags:
+      - 购物车
+  /users/cart/checked:
+    get:
+      consumes:
+      - application/json
+      description: 查询购物车中已勾选的商品（用于结算）
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 已勾选商品列表
+      tags:
+      - 购物车
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 勾选状态
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CartCheckedAllReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 全选/取消全选
+      tags:
+      - 购物车
+  /users/cart/items:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 商品ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CartItemDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 删除购物车商品
+      tags:
+      - 购物车
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 购物车列表
+      tags:
+      - 购物车
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 商品ID和数量
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CartItemAddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: 库存不足或商品已下架
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 加入购物车
+      tags:
+      - 购物车
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 商品ID和新数量
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CartItemUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 更新购物车商品数量
+      tags:
+      - 购物车
+  /users/cart/items/checked:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 商品ID和勾选状态
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CartItemCheckedReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 勾选/取消勾选单个商品
+      tags:
+      - 购物车
+  /users/favorite/check:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 商品ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteCheckReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 检查是否已收藏
+      tags:
+      - 收藏
+  /users/favorite/folders:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 收藏夹ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteFolderDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 删除收藏夹
+      tags:
+      - 收藏
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 收藏夹列表
+      tags:
+      - 收藏
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 收藏夹名称
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteFolderCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 创建收藏夹
+      tags:
+      - 收藏
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 收藏夹ID和新名称
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteFolderUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 更新收藏夹
+      tags:
+      - 收藏
+  /users/favorite/items:
+    delete:
+      consumes:
+      - application/json
+      description: 从收藏夹中移除商品
+      parameters:
+      - description: 收藏夹ID和商品ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteItemDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 取消收藏
+      tags:
+      - 收藏
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 收藏夹ID和分页
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteItemListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 收藏夹商品列表
+      tags:
+      - 收藏
+    post:
+      consumes:
+      - application/json
+      description: 将商品添加到指定收藏夹
+      parameters:
+      - description: 收藏夹ID和商品ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FavoriteItemAddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 收藏商品
+      tags:
+      - 收藏
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户名密码登录，返回 JWT Token
+      parameters:
+      - description: 登录信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/mall_pkg_core.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.AuthTokensResponse'
+              type: object
+        "400":
+          description: 用户名或密码错误
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 用户登录
+      tags:
+      - 用户
+  /users/me:
+    put:
+      consumes:
+      - application/json
+      description: 修改昵称和头像
+      parameters:
+      - description: 用户信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 修改用户信息
+      tags:
+      - 用户
+  /users/me/amount:
+    get:
+      consumes:
+      - application/json
+      description: 查询当前用户的账户余额
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/mall_pkg_core.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.UserAmountResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 查询余额
+      tags:
+      - 用户
+  /users/me/password:
+    put:
+      consumes:
+      - application/json
+      description: 输入旧密码和新密码
+      parameters:
+      - description: 新旧密码
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: 旧密码错误
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 修改登录密码
+      tags:
+      - 用户
+  /users/me/pay-password:
+    put:
+      consumes:
+      - application/json
+      description: 设置/修改余额支付密码，至少6位
+      parameters:
+      - description: 支付密码
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SetPayPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 设置支付密码
+      tags:
+      - 用户
+  /users/orders:
+    get:
+      description: 当前用户的订单分页列表（含商品快照），支持按状态过滤
+      parameters:
+      - description: 页码，默认 1
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量，默认 20
+        in: query
+        name: page_size
+        type: integer
+      - description: 订单状态过滤
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 我的订单列表
+      tags:
+      - 订单
+  /users/orders/buy-now:
+    post:
+      consumes:
+      - application/json
+      description: 跳过购物车直接下单单个商品
+      parameters:
+      - description: 商品ID、数量、地址ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OrderBuyNowReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: 库存不足
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 立即购买
+      tags:
+      - 订单
+  /users/orders/cart:
+    post:
+      consumes:
+      - application/json
+      description: 将购物车中已勾选商品生成订单
+      parameters:
+      - description: 收货地址ID
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OrderCreateFromCartReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: 无勾选商品/库存不足
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 购物车结算
+      tags:
+      - 订单
+  /users/payments:
+    post:
+      consumes:
+      - application/json
+      description: 对指定订单发起支付（mock/balance）
+      parameters:
+      - description: 订单ID和支付渠道
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PaymentCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: 订单已支付/状态不正确
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 创建支付
+      tags:
+      - 支付
+  /users/payments/detail:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 支付单号
+        in: query
+        name: payment_no
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 查询支付结果
+      tags:
+      - 支付
+  /users/payments/mock/success:
+    post:
+      consumes:
+      - application/json
+      description: 仅用于测试，将支付单标记为成功
+      parameters:
+      - description: 支付单号
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PaymentMockSuccessReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      security:
+      - BearerAuth: []
+      summary: 模拟支付成功
+      tags:
+      - 支付
+  /users/refresh-token:
+    post:
+      consumes:
+      - application/json
+      description: 使用 refresh_token 获取新的 Token 对
+      parameters:
+      - description: refresh_token
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/mall_pkg_core.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.AuthTokensResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "401":
+          description: token 无效或过期
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 刷新 Token
+      tags:
+      - 用户
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: 创建新用户账号
+      parameters:
+      - description: 注册信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "400":
+          description: 参数错误或用户名已存在
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+        "500":
+          description: 注册失败
+          schema:
+            $ref: '#/definitions/mall_pkg_core.Response'
+      summary: 用户注册
+      tags:
+      - 用户
+securityDefinitions:
+  BearerAuth:
+    description: JWT Token，格式：Bearer <token>
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,58 @@
+# 本地开发配置（docker-compose 端口/弱口令）。
+# 生产环境请用环境变量覆盖敏感项，见仓库根目录 .env.example。
+server:
+  model: dev 
+  port: 3333
+
+mysql: 
+# root:123456@tcp(127.0.0.1:13306)/mall?charset=utf8mb4&P
+#parseTime=True&loc=Local
+  host: 127.0.0.1
+  port: 13306
+  dbname: mall
+  username: root
+  password: 123456
+
+redis:
+  host: 127.0.0.1
+  port: 6379 
+  password: ""
+  db: 0 
+
+rabbitmq:
+  url: amqp://guest:guest@127.0.0.1:5672/
+
+meilisearch:
+  host: "http://127.0.0.1:7700"
+  # 和 docker-compose 里 MEILI_MASTER_KEY 保持一致
+  # 设了主密钥后 Meilisearch 强制鉴权，这里留空会 401
+  api_key: "mall-change-me-master-key"
+  product_index: "mall_products"
+
+seckill:
+  rate_limit_rate: 1000
+  rate_limit_capacity: 2000
+
+trace:
+  enabled: true
+  service_name: mall-api
+  jaeger_endpoint: http://127.0.0.1:14268/api/traces
+
+path:
+  product: /static/product 
+  avatar: /static/avatar
+
+jwt:
+  # 本地开发默认值；生产必须用环境变量 JWT_SECRET 覆盖
+  secret: "dev-only-jwt-secret-change-me-32chars"
+
+# 安全基线（审计修复项）
+security:
+  # 跨域来源白名单。同源部署（nginx 反代前端）留空即可，不返回任何 CORS 头。
+  cors_origins: []
+  # 演示模式：开放 demo/admin 演示账号提示、模拟支付接口
+  demo_mode: true
+  # HTTPS 部署时置 true，refresh token cookie 加 Secure
+  cookie_secure: false
+  # 只信任本机反向代理的 X-Forwarded-For
+  trusted_proxies: ["127.0.0.1", "::1"]

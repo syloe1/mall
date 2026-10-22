@@ -1,0 +1,170 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mall-mysql
+    restart: unless-stopped
+    mem_limit: 512m
+    memswap_limit: 768m
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: mall
+    ports:
+      - "13306:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --innodb-buffer-pool-size=128M
+      - --max-connections=50
+      - --performance-schema=OFF
+      - --table-open-cache=200
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - mall-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: mall-redis
+    restart: unless-stopped
+    mem_limit: 128m
+    memswap_limit: 192m
+    command: ["redis-server", "--maxmemory", "96mb", "--maxmemory-policy", "noeviction"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - redis-data:/data
+    networks:
+      - mall-net
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: mall-rabbitmq
+    restart: unless-stopped
+    mem_limit: 384m
+    memswap_limit: 512m
+    environment:
+      # 仅保留未废弃的变量；内存/磁盘水位改由挂载的 rabbitmq.conf 提供
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "+sbwt none +sbwtdcpu none +sbwtdio none"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 15s
+      timeout: 12s
+      retries: 12
+      start_period: 130s
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    networks:
+      - mall-net
+
+  meilisearch:
+    # 搜索引擎：替代 Elasticsearch（内存小，8G 小主机友好）
+    image: getmeili/meilisearch:v1.13
+    container_name: mall-meilisearch
+    restart: unless-stopped
+    mem_limit: 256m
+    memswap_limit: 384m
+    environment:
+      # 主密钥必须和 config.docker.yaml / worker.docker.yaml 的 meilisearch.api_key 一致
+      MEILI_MASTER_KEY: "mall-change-me-master-key"
+      MEILI_NO_ANALYTICS: "true"
+    ports:
+      - "7700:7700"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:7700/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - meili-data:/meili_data
+    networks:
+      - mall-net
+
+  web:
+    build: .
+    image: mall:local
+    container_name: mall-web
+    restart: no
+    command: /app/bin/web
+    expose:
+      - "3333"
+    env_file:
+      - .env
+    depends_on:
+      # 必须等各依赖 healthy，否则应用会在 MySQL 就绪前连接并退出
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      meilisearch:
+        condition: service_healthy
+    networks:
+      - mall-net
+
+  worker:
+    build: .
+    image: mall:local
+    container_name: mall-worker
+    restart: no
+    command: /app/bin/worker
+    # worker 不监听 HTTP 端口，禁用镜像继承的 /api/v1/ping 健康检查
+    # （否则会永远报 unhealthy；进程存活与否由容器退出状态反映）
+    healthcheck:
+      disable: true
+    env_file:
+      - .env
+    depends_on:
+      # 必须等各依赖 healthy，否则应用会在 MySQL 就绪前连接并退出
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      meilisearch:
+        condition: service_healthy
+    networks:
+      - mall-net
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: mall-nginx
+    restart: unless-stopped
+    mem_limit: 64m
+    memswap_limit: 96m
+    ports:
+      # 8888 落在 Windows 保留端口段 8885-8984，故宿主机改用 18888
+      - "18888:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./static:/app/static:ro
+    depends_on:
+      - web
+    networks:
+      - mall-net
+
+volumes:
+  mysql-data:
+  redis-data:
+  rabbitmq-data:
+  meili-data:
+
+networks:
+  mall-net:
+    driver: bridge

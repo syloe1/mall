@@ -1,0 +1,26 @@
+mysql:
+  host: mysql
+  port: 3306
+  dbname: mall
+  username: root
+  password: 123456
+
+redis:
+  host: redis
+  port: 6379
+  password: ""
+  db: 0
+
+rabbitmq:
+  url: amqp://guest:guest@rabbitmq:5672/
+
+meilisearch:
+  host: "http://meilisearch:7700"
+  api_key: "mall-change-me-master-key" # 和 docker-compose 里 MEILI_MASTER_KEY 保持一致
+  product_index: "mall_products"
+
+trace:
+  # jaeger 服务已从 docker-compose 移除，如需链路追踪再打开并补回 jaeger 服务
+  enabled: false
+  service_name: mall-worker
+  jaeger_endpoint: http://jaeger:14268/api/traces

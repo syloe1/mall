@@ -1,0 +1,27 @@
+mysql:
+  host: 127.0.0.1
+  port: 13306
+  dbname: mall
+  username: root
+  password: 123456
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 0
+
+rabbitmq:
+  url: amqp://guest:guest@127.0.0.1:5672/
+
+meilisearch:
+  host: "http://127.0.0.1:7700"
+  # 和 docker-compose 里 MEILI_MASTER_KEY 保持一致
+  # 设了主密钥后 Meilisearch 强制鉴权，这里留空会 401
+  api_key: "mall-change-me-master-key"
+  product_index: "mall_products"
+
+trace:
+  enabled: true
+  service_name: mall-worker
+  jaeger_endpoint: http://127.0.0.1:14268/api/traces
